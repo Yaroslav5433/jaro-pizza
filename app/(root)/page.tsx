@@ -3,11 +3,11 @@ import {
     Filters,
     Title,
     TopBar,
-  } from '@/components/shared';
+  } from '@/shared/components/shared';
 
   import { Suspense } from 'react';
-  import { GetSearchParams, findPizzas } from '@/components/shared/lib/find-pizzas';
-import { ProductsGroupList } from '@/components/shared/products-group-list';
+  import { GetSearchParams, findPizzas } from '@/shared/components/shared/lib/find-pizzas';
+import { ProductsGroupList } from '@/shared/components/shared/products-group-list';
   
   export default async function Home({ searchParams }: { searchParams: GetSearchParams }) {
     const categories = await findPizzas(searchParams);

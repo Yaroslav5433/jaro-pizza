@@ -1,5 +1,5 @@
 
-import { ChooseProductModal } from '@/components/shared';
+import { ChooseProductModal } from '@/shared/components/shared';
 import { prisma } from '@/prisma/prisma';
 import { notFound } from 'next/navigation';
 
