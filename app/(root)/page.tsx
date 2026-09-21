@@ -9,8 +9,9 @@ import {
   import { GetSearchParams, findPizzas } from '@/shared/components/shared/lib/find-pizzas';
 import { ProductsGroupList } from '@/shared/components/shared/products-group-list';
   
-  export default async function Home({ searchParams }: { searchParams: GetSearchParams }) {
-    const categories = await findPizzas(searchParams);
+  export default async function Home({ searchParams }: { searchParams: Promise<GetSearchParams> }) {
+    const params = await searchParams;
+    const categories = await findPizzas(params);
   
     return (
       <>
