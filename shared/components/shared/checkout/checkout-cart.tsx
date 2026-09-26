@@ -35,5 +35,5 @@ export const CheckoutCart: React.FC<Props> = ({ loading, className, items, onCli
             ))}
         </div>
     </WhiteBlock> 
-  );
+  ); 
 };

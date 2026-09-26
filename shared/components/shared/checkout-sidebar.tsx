@@ -8,14 +8,14 @@ interface Props {
   totalAmount: number;
   className?: string;
   loading?: boolean;
+  submitting?: boolean;
 }
 
 const VAT = 7;
 const DELIVERY_PRICE = 150;
 
 
-export const CheckoutSidebar: React.FC<Props> = ({ className, totalAmount, loading }) => {
-  
+export const CheckoutSidebar: React.FC<Props> = ({ submitting, className, totalAmount, loading }) => {
   const vatPrice = (totalAmount * VAT) / 100;    
 
   return (
@@ -44,7 +44,7 @@ export const CheckoutSidebar: React.FC<Props> = ({ className, totalAmount, loadi
             </div>
         } value={loading ? <Skeleton className='h-6 w-14 rounded-[6px]'/> : `${DELIVERY_PRICE} Eur`}/>
 
-        <Button type="submit" className="w-full h-14 rounded-2xl mt-6 text-base font-bold">
+        <Button loading={submitting} type="submit" className="w-full h-14 rounded-2xl mt-6 text-base font-bold">
             Перейти к оплате
             <ArrowRight className="w-5 ml-2"/>
         </Button>

@@ -1,12 +1,15 @@
+'use client';
+
 import React from 'react';
 import { cn } from '@/shared/lib/utils';
 import { Container } from './container';
 import Image from 'next/image';
-import { Button } from '../ui';
-import { ArrowRight, ShoppingCart, User } from 'lucide-react';
 import Link from 'next/link';
-import { SearchInput } from '.';
+import { AuthModal, ProfileButton, SearchInput } from '.';
 import { CartButton } from './cart-button';
+import { useSearchParams } from 'next/navigation';
+import toast from 'react-hot-toast';
+import { useRouter } from 'next/navigation';
 
 interface Props {
   hasCart?: boolean;
@@ -15,7 +18,34 @@ interface Props {
 }
 
 export const Header: React.FC<Props> = ({ hasCart = true, hasSearch = true, className }) => {
-  return (
+    const router = useRouter();
+    
+    const [openAuthModal, setOpenAuthModal] = React.useState(false);
+    
+    const searchParams = useSearchParams();
+    
+    React.useEffect(() => {
+        let toastMessage = '';
+
+        if (searchParams.has('paid')) {
+            toastMessage = 'Заказ успешно оплачен';
+        }
+
+        if (searchParams.has('verified')) {
+            toastMessage = 'Аккаунт успешно подтвержден';
+        }
+
+        if (toastMessage) {
+            setTimeout(() => {
+                router.replace('/')
+                toast.success(toastMessage, {
+                    icon: '💥',
+                });  
+            }, 1000);
+        }
+    }, []);
+  
+    return (
     <header className={cn('border-b', className)}>
         <Container className='flex items-center justify-between py-8'>
             <Link href='/'>
@@ -33,10 +63,10 @@ export const Header: React.FC<Props> = ({ hasCart = true, hasSearch = true, clas
             </div>}
 
             <div className='flex items-center gap-3'>
-                <Button className='flex items-center gap-1' variant='outline'>
-                <User size={16}/>
-                Войти</Button>
-
+                <AuthModal open={openAuthModal} onClose={() => setOpenAuthModal(false)} />
+                
+                <ProfileButton onClickSignIn={() => setOpenAuthModal(true)} />
+ 
                 {hasCart && <CartButton />}
             </div>
         </Container>
