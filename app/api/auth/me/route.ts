@@ -1,10 +1,13 @@
 import { prisma } from "@/prisma/prisma";
-import { getUserSession } from "@/shared/components/shared/lib/get-user-session";
+import { authOptions } from "@/shared/constants/auth-options";
+import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
+
+export const dynamic = 'force-dynamic';
 
 export async function GET() {
     try {
-        const user = await getUserSession();
+        const user = await getServerSession(authOptions);
 
         if (!user) {
             return NextResponse.json({ message: 'Not authorized' }, { status: 401 });

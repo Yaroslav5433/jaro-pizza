@@ -9,6 +9,7 @@ import { createOrder } from "@/app/actions";
 import toast from "react-hot-toast";
 import React from "react";
 import { useSession } from "next-auth/react";
+import { Api } from "@/shared/services/api-client";
 
 export default function CheckoutPage() {
     const {totalAmount, updateItemQuantity, items, removeCartItem, loading} = useCart();
