@@ -27,7 +27,7 @@ export const LoginForm: React.FC<Props> = ({ onClose }) => {
                 redirect: false,
             });
 
-            if (resp?.ok) {
+            if (!resp?.ok) {
                 throw Error();
             }
 

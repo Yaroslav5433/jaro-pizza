@@ -8,10 +8,12 @@ import { CheckoutFormValues, checkoutFormSchema } from "@/shared/constants";
 import { createOrder } from "@/app/actions";
 import toast from "react-hot-toast";
 import React from "react";
+import { useSession } from "next-auth/react";
 
 export default function CheckoutPage() {
     const {totalAmount, updateItemQuantity, items, removeCartItem, loading} = useCart();
     const [submitting, setSubmitting] = React.useState(false);
+    const { data: session } = useSession();
 
     const onClickCountButton = (id: number, quantity: number, type: 'plus' | 'minus') => {
         const newQuantity = type === 'plus' ? quantity + 1 : quantity - 1;
@@ -22,13 +24,28 @@ export default function CheckoutPage() {
         resolver: zodResolver(checkoutFormSchema),
         defaultValues: {
             email: '',
-            firstName: '',
+            firstName: session?.user?.name || '',
             lastName: '',
             phone: '',
             adress: '',
             comment: '',
         }
     })
+
+    React.useEffect(() => {
+
+        async function fetchUserInfo() {
+            const data = await Api.auth.getMe();
+            const [firstName, lastName] = data.fullname.split(' ');
+            
+            form.setValue('firstName', firstName);
+            form.setValue('lastName', lastName);
+            form.setValue('email', data.email);
+        }
+
+        if (session) {
+        }
+    }, [session]);
 
     const onSubmit = async (data: CheckoutFormValues) => {
         try {

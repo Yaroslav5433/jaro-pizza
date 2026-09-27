@@ -6,6 +6,7 @@ interface Props {
 }
 
 export const CheckoutPersonalForm: React.FC<Props> = ({ className }) => {
+  
   return (
     <WhiteBlock title="2. Персональные данные" className={className}>
         <div className="grid grid-cols-2 gap-5">
